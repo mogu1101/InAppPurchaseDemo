@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		043518B11ED2C946009F3E78 /* IAPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 043518B01ED2C946009F3E78 /* IAPUtils.m */; };
+		043518B41ED2D0F4009F3E78 /* RMStoreUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 043518B31ED2D0F4009F3E78 /* RMStoreUtils.m */; };
 		04D0B9131ECD57C1005FD126 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D0B9121ECD57C1005FD126 /* main.m */; };
 		04D0B9161ECD57C1005FD126 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D0B9151ECD57C1005FD126 /* AppDelegate.m */; };
 		04D0B9191ECD57C1005FD126 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D0B9181ECD57C1005FD126 /* ViewController.m */; };
@@ -37,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		043518AF1ED2C946009F3E78 /* IAPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPUtils.h; sourceTree = "<group>"; };
+		043518B01ED2C946009F3E78 /* IAPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPUtils.m; sourceTree = "<group>"; };
+		043518B21ED2D0F4009F3E78 /* RMStoreUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMStoreUtils.h; sourceTree = "<group>"; };
+		043518B31ED2D0F4009F3E78 /* RMStoreUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMStoreUtils.m; sourceTree = "<group>"; };
 		04D0B90E1ECD57C1005FD126 /* InAppPurchaseTestDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InAppPurchaseTestDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04D0B9121ECD57C1005FD126 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		04D0B9141ECD57C1005FD126 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -120,6 +126,10 @@
 				04D0B91F1ECD57C1005FD126 /* LaunchScreen.storyboard */,
 				04D0B9221ECD57C1005FD126 /* Info.plist */,
 				04D0B9111ECD57C1005FD126 /* Supporting Files */,
+				043518AF1ED2C946009F3E78 /* IAPUtils.h */,
+				043518B01ED2C946009F3E78 /* IAPUtils.m */,
+				043518B21ED2D0F4009F3E78 /* RMStoreUtils.h */,
+				043518B31ED2D0F4009F3E78 /* RMStoreUtils.m */,
 			);
 			path = InAppPurchaseTestDemo;
 			sourceTree = "<group>";
@@ -360,7 +370,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				043518B11ED2C946009F3E78 /* IAPUtils.m in Sources */,
 				04D0B9191ECD57C1005FD126 /* ViewController.m in Sources */,
+				043518B41ED2D0F4009F3E78 /* RMStoreUtils.m in Sources */,
 				04D0B9161ECD57C1005FD126 /* AppDelegate.m in Sources */,
 				04D0B9131ECD57C1005FD126 /* main.m in Sources */,
 			);
