@@ -1,0 +1,14 @@
+PODS:
+  - RMStore (0.7.1):
+    - RMStore/Core (= 0.7.1)
+  - RMStore/Core (0.7.1)
+
+DEPENDENCIES:
+  - RMStore (~> 0.7)
+
+SPEC CHECKSUMS:
+  RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
+
+PODFILE CHECKSUM: dc31b722e5c88b5d1084dcbe5b30ad5ad3bea01c
+
+COCOAPODS: 1.1.1
