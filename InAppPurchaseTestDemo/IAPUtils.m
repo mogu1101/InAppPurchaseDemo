@@ -95,38 +95,68 @@
     NSData *receiptData = [NSData dataWithContentsOfURL:receiptUrl];
 //    NSData *receiptData = transaction.transactionReceipt;
     NSString *receiptString = [receiptData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
-    NSString *bodyString = [NSString stringWithFormat:@"{\"receipt-data\": \"%@\"}", receiptString];
-    NSData *bodyData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *requestContents = @{
+                                      @"receipt-data": [receiptData base64EncodedStringWithOptions:0],
+                                      @"password": @"f9ee8400c6af436b8f12e33d575837b3"
+                                      };
+//    NSString *bodyString = [NSString stringWithFormat:@"{\"receipt-data\": \"%@\"}", receiptString];
+//    NSData *bodyData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *error;
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:requestContents
+                                                       options:0
+                                                         error:&error];
     
     // 创建请求到苹果官方进行购买验证
-    NSURL *url = [NSURL URLWithString:SANDBOX];
-    NSMutableURLRequest *requests = [NSMutableURLRequest requestWithURL:url];
-    requests.HTTPBody = bodyData;
-    requests.HTTPMethod = @"POST";
-    NSError *error = nil;
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:requests returningResponse:nil error:&error];
-    if (error) {
-        NSLog(@"验证购买过程中发生错误，错误信息：%@", error.localizedDescription);
-        return;
-    }
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:nil];
-    NSLog(@"%@", dict);
-    if ([dict[@"status"] integerValue] == 0) {
-        NSLog(@"购买成功！");
-        NSDictionary *dictReceipt = dict[@"receipt"];
-        NSDictionary *dictInApp = [dictReceipt[@"in_app"] firstObject];
-        NSString *productIdentifier = dictInApp[@"product_id"];
-        // 如果是消耗品则记录购买数量，非消耗品则记录是否购买过
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        if ([productIdentifier isEqualToString:self.productId]) {
-            NSInteger purchasedCount = [defaults integerForKey:productIdentifier];
-            [[NSUserDefaults standardUserDefaults] setInteger:purchasedCount + 1 forKey:productIdentifier];
-        } else {
-            [defaults setBool:YES forKey:productIdentifier];
-        }
-    } else {
-        NSLog(@"购买失败，未通过验证！");
-    }
+    NSURL *storeURL = [NSURL URLWithString:SANDBOX];
+    NSMutableURLRequest *storeRequest = [NSMutableURLRequest requestWithURL:storeURL];
+    [storeRequest setHTTPMethod:@"POST"];
+    [storeRequest setHTTPBody:bodyData];
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:storeRequest queue:queue
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                               if (connectionError) {
+                                   NSLog(@"验证购买过程中发生错误，错误信息：%@", error.localizedDescription);
+                               } else {
+                                   NSError *error;
+                                   NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+                                   if (!jsonResponse) {
+                                       NSLog(@"验证错误");
+                                   }
+                                   if ([jsonResponse[@"status"] integerValue] == 0) {
+                                       NSLog(@"验证成功!");
+                                   } else {
+                                       NSLog(@"验证失败：%@", jsonResponse[@"status"]);
+                                   }
+                               }
+                           }];
+
+//    NSMutableURLRequest *requests = [NSMutableURLRequest requestWithURL:url];
+//    requests.HTTPBody = bodyData;
+//    requests.HTTPMethod = @"POST";
+//    NSError *error = nil;
+//    NSData *responseData = [NSURLConnection sendSynchronousRequest:requests returningResponse:nil error:&error];
+//    if (error) {
+//        NSLog(@"验证购买过程中发生错误，错误信息：%@", error.localizedDescription);
+//        return;
+//    }
+//    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:nil];
+//    NSLog(@"%@", dict);
+//    if ([dict[@"status"] integerValue] == 0) {
+//        NSLog(@"购买成功！");
+//        NSDictionary *dictReceipt = dict[@"receipt"];
+//        NSDictionary *dictInApp = [dictReceipt[@"in_app"] firstObject];
+//        NSString *productIdentifier = dictInApp[@"product_id"];
+//        // 如果是消耗品则记录购买数量，非消耗品则记录是否购买过
+//        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//        if ([productIdentifier isEqualToString:self.productId]) {
+//            NSInteger purchasedCount = [defaults integerForKey:productIdentifier];
+//            [[NSUserDefaults standardUserDefaults] setInteger:purchasedCount + 1 forKey:productIdentifier];
+//        } else {
+//            [defaults setBool:YES forKey:productIdentifier];
+//        }
+//    } else {
+//        NSLog(@"购买失败，未通过验证！");
+//    }
 }
 
 #pragma mark - SKPaymentTransactionObserver

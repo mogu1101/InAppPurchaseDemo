@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "RMStore.h"
+#import "RMStoreAppReceiptVerifier.h"
+#import "RMStoreKeychainPersistence.h"
 
 @interface AppDelegate ()
 
@@ -17,10 +20,19 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self configureStore];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[ViewController alloc] init]];
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)configureStore {
+    id<RMStoreReceiptVerifier> receiptVerifier = [[RMStoreAppReceiptVerifier alloc] init];
+    [RMStore defaultStore].receiptVerifier = receiptVerifier;
+    
+    RMStoreKeychainPersistence *persistence = [[RMStoreKeychainPersistence alloc] init];
+    [RMStore defaultStore].transactionPersistor = persistence;
 }
 
 

@@ -1,14 +1,22 @@
 PODS:
-  - RMStore (0.7.1):
-    - RMStore/Core (= 0.7.1)
-  - RMStore/Core (0.7.1)
+  - OpenSSL-Universal (1.0.2.10)
 
 DEPENDENCIES:
-  - RMStore (~> 0.7)
+  - OpenSSL-Universal (from `https://github.com/krzyzanowskim/OpenSSL.git`, branch `master`)
+
+EXTERNAL SOURCES:
+  OpenSSL-Universal:
+    :branch: :master
+    :git: https://github.com/krzyzanowskim/OpenSSL.git
+
+CHECKOUT OPTIONS:
+  OpenSSL-Universal:
+    :commit: 32a7d4c21b63a2536a36dae7ee2860b247571bbb
+    :git: https://github.com/krzyzanowskim/OpenSSL.git
 
 SPEC CHECKSUMS:
-  RMStore: 64ba13a9c040e3b7572765d169f77175cd3243e5
+  OpenSSL-Universal: 6dc366764e8bf6ca93c60bd767d9103146a3b3b6
 
-PODFILE CHECKSUM: dc31b722e5c88b5d1084dcbe5b30ad5ad3bea01c
+PODFILE CHECKSUM: 22a3321a00c9b234c25b039f392f50bef252b9b5
 
 COCOAPODS: 1.1.1
